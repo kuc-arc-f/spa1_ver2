@@ -23,23 +23,21 @@
                 content:''
             }
         },
-        // メソッドの定義。ここでv-on:click=''で記述したpostArticle()メソッドを定義します
         methods: {
             postArticle(){
-                // テンプレートのv-modelのtitleとcontentの入力値を取得しarticleという配列に格納
                 var task = {
                     'title': this.title,
                     'content': this.content
                 };
-
-                // 今回はuserのidを1とします。
-//                var id = 1;
-                // axios.postの第１引数にルートを、第２引数にポストするデータの配列を渡します
                 axios.post('/api/tasks/add' ,task).then(res => {
                     // テストのため返り値をコンソールに表示
                     console.log(res.data.title);
                     console.log(res.data.content);
-                });
+                    var arr={message : '登録が完了しました。'}
+                    exStorage.save( sysConst.STORAGE_KEY_flash, arr )
+                    window.location.href='/tasks'
+//                    exStorage.save( sysConst.STORAGE_KEY_flash, 'complete , add' )
+              });
             }
         }
     }

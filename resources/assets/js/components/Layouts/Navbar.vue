@@ -13,6 +13,9 @@
             <li>
                 <router-link  to="/users/login">Login</router-link>
             </li>
+            <li>
+                <router-link  to="/tasks">Task</router-link>
+            </li>
         </ul>
     </nav>
 </template>

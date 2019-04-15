@@ -1,23 +1,46 @@
 //
-var STORAGE_KEY = 'user_strage_object'
+var sysConst= {
+  STORAGE_KEY       : 'user_strage_object',
+  STORAGE_KEY_flash : 'strage_flash_key',
+}
+
+//
+var exStorage = {
+  load: function (key) {
+    var dat = JSON.parse(localStorage.getItem(key ))
+    if(dat !=null){
+      console.log( 'dat-len='+ dat.length )
+    }else{
+      console.log( '#dat=null')
+    }
+    return dat
+  },
+  save: function (key, message) {
+    localStorage.setItem( key, JSON.stringify(message))
+  },
+  remove: function (key) {
+    localStorage.removeItem( key );
+  },
+}
+//
 var myStorage = {
   load: function () {
-    var user = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+    var user = JSON.parse(localStorage.getItem(sysConst.STORAGE_KEY) || '[]')
     console.log( 'user-len='+user.length )
     return user
   },
   save: function (user) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+    localStorage.setItem(sysConst.STORAGE_KEY, JSON.stringify(user))
   },
   remove: function () {
-    localStorage.removeItem( STORAGE_KEY );
+    localStorage.removeItem( sysConst.STORAGE_KEY );
   },
   test: function () {
-    var obj= localStorage.getItem(STORAGE_KEY)
+    var obj= localStorage.getItem(sysConst.STORAGE_KEY)
     console.log(obj)
   }
-
 }
+
 //
 var userState = {
   check: function () {

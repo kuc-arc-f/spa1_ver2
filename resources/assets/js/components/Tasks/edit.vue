@@ -9,6 +9,8 @@
                 <textarea class="form-control" id="content" rows="3" v-model="content"></textarea>
             </div>
             <button v-on:click="postTask">投稿</button>
+            <hr />
+            <button v-on:click="destroyTask">削除</button>
     </div>
 </template>
 
@@ -37,19 +39,26 @@
                 });
             },
             postTask(){
-                // テンプレートのv-modelのtitleとcontentの入力値を取得しarticleという配列に格納
                 var task = {
                     'title': this.title,
                     'content': this.content
                 };
-
-                // 今回はuserのidを1とします。
-//                var id = 1;
-                // axios.postの第１引数にルートを、第２引数にポストするデータの配列を渡します
                 axios.post('/api/tasks/update/'+ this.$route.params.id ,task).then(res => {
-                    // テストのため返り値をコンソールに表示
                     console.log(res.data.title);
                     console.log(res.data.content);
+                    var arr={message : '更新が完了しました。'}
+                    exStorage.save( sysConst.STORAGE_KEY_flash, arr )
+                    window.location.href='/tasks'
+                });
+            },
+            destroyTask(){
+                axios.get('/api/tasks/destroy/'+ this.$route.params.id  ).then(res => {
+                    console.log(res.data );
+                    if(res.data.ret==1){
+                        var arr={message : '削除が完了しました。'}
+                        exStorage.save( sysConst.STORAGE_KEY_flash, arr )
+                        window.location.href='/tasks'
+                    }
                 });
             }
         }

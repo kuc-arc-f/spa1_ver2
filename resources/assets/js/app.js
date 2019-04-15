@@ -15,6 +15,7 @@ window.Vue = require('vue');
 Vue.use(VueRouter);
 
 Vue.component('navbar', require('./components/Layouts/Navbar.vue'))
+Vue.component('flash-message', require('./components/Layouts/FlashMessage.vue'))
 const router = new VueRouter({
     mode: 'history',
     routes: [

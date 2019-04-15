@@ -34,7 +34,8 @@ Route::group(['middleware' => 'api'], function() {
     });
     //
     Route::get('tasks',  function() {
-        $tasks = App\Task::all()->take(100);
+//        $tasks = App\Task::all()->take(100);
+        $tasks = App\Task::orderBy('id', 'desc')->get();
         return $tasks;
     });
     Route::get('tasks/show/{id}',  function($id) {
@@ -55,11 +56,19 @@ Route::group(['middleware' => 'api'], function() {
     //
     Route::post('tasks/update/{id}',  function($id) {
 //        $task = new App\Task();
-        $task = App\Book::find($id);
+        $task = App\Task::find($id);
         $task->title   = request('title');
         $task->content = request('content');
         $task->save();
         return ['title' => request('title'),'content' => request('content')];
+    });
+    //
+    Route::get('tasks/destroy/{id}',  function($id) {
+        $const = new AppConst;
+        $task = App\Task::find($id);
+        $task->delete();
+        $ret= $const->OK_CODE;
+        return ['ret'=>$ret  ];
     });
     //
     Route::get('user/check',  function() {
